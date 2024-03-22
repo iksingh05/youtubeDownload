@@ -1,7 +1,13 @@
-import os, re, sys
+import os, re, sys, logging
 from pytube import Playlist, YouTube
+
+logger = logging.getLogger(__name__)
+
 class ytdownloader:
     def downloadytvideos(self,param_folder_path, param_url_input,param_excludedVideos,param_includedVideos):
+        
+        logger.info('downloadytvideos function is executed.')
+
         if param_includedVideos:
             if '-' in param_includedVideos:
                 startIn, endIn = map(int, param_includedVideos.split('-'))

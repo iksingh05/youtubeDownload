@@ -1,24 +1,31 @@
 import os
 from flask import Flask, render_template, request, jsonify
-from applicationinsights import TelemetryClient
+# from applicationinsights import TelemetryClient
 from .ytdownloader import ytdownloader
+from .logger import configure_logging
 
+
+# Configure logging
+configure_logging()
 
 # Instantiate the ytdownloader class
 yt_downloader = ytdownloader()
 
 app = Flask(__name__)
 
-app_insights_key = 'd204baed-6660-4a5a-ad9e-e4faa99df561'
-app_insights_client = TelemetryClient(app_insights_key)
+# app_insights_key = 'd204baed-6660-4a5a-ad9e-e4faa99df561'
+# app_insights_client = TelemetryClient(app_insights_key)
+
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
+
         folder_path = request.form.get('folderPath')
         url = request.form.get('url')
         excludedvideolist = request.form.get('excludedVideos')
         includedVideoslist =request.form.get('includedVideos')
+
         if not folder_path.strip():
             return jsonify({'error': 'Please enter folder path', 'field': 'folderPath'}), 400
         elif not url.strip():
@@ -28,6 +35,7 @@ def index():
                 os.makedirs(folder_path)
             try:
                 # Call the function from ytdownloader.py
+                app.logger.info('Index route accessed.')
                 yt_downloader.downloadytvideos(folder_path, url,excludedvideolist,includedVideoslist)
                 return jsonify({'success': 'Video Downloaded successfully'}), 200
             except ValueError as e:
