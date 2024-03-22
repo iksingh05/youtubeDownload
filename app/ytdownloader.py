@@ -25,11 +25,12 @@ class ytdownloader:
                 excludedVideos_list =  [int(x) for x in param_excludedVideos.split(',')]
         else:
             excludedVideos_list = []
-
-        sys.stdout.write(param_folder_path)
-        sys.stdout.write(param_url_input)
-        sys.stdout.write(param_excludedVideos)
-        sys.stdout.write(param_includedVideos)
+        sys.stdout.write("pwd")
+        os.system('pwd')
+        sys.stdout.write("param_folder_path" + param_folder_path)
+        sys.stdout.write("param_url_input" + param_url_input)
+        sys.stdout.write("param_excludedVideos" + param_excludedVideos)
+        sys.stdout.write("param_includedVideos" + param_includedVideos)
 
         # for url in url_list:
         if "playlist" in param_url_input:
@@ -45,9 +46,9 @@ class ytdownloader:
                 if i in includedVideos_list or not includedVideos_list:
                     downloadvideo.append((i, urlInPlayList))
             
-            sys.stdout.write(str(downloadvideo))
+            sys.stdout.write("downloadvideo" + str(downloadvideo))
 
-            os.system('cls')  # Clear the screen then download
+            # os.system('cls')  # Clear the screen then download
 
             for index,urlInPlayList in downloadvideo:
                 self.downloadvideo(folder_path=param_folder_path, url=urlInPlayList,number=index)
@@ -79,12 +80,14 @@ class ytdownloader:
 
     def videodownload(self,yt,filename,title):
         try:
+            sys.stdout.write(str(os.path.exists(filename)))
             if not os.path.exists(filename):
+                sys.stdout.write(filename)
                 high_res_vid = yt.streams.get_highest_resolution()
                 yt.register_on_progress_callback(lambda chunk, file_handle, bytes_remaining: self.on_progress(chunk, file_handle, bytes_remaining, high_res_vid.filesize))
                 high_res_vid.download(filename=filename)
             else:
-                print(title ,"-Already downloaded!")
+                sys.stdout.write("title-" + title + "- Already downloaded!")
         except Exception as e:
             raise e
 
