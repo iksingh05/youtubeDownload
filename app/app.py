@@ -1,5 +1,6 @@
 import os
 from flask import Flask, render_template, request, jsonify
+from applicationinsights import TelemetryClient
 from .ytdownloader import ytdownloader
 
 
@@ -7,6 +8,9 @@ from .ytdownloader import ytdownloader
 yt_downloader = ytdownloader()
 
 app = Flask(__name__)
+
+app_insights_key = 'd204baed-6660-4a5a-ad9e-e4faa99df561'
+app_insights_client = TelemetryClient(app_insights_key)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -32,6 +36,10 @@ def index():
                 return jsonify({'error': 'An error occurred: ' + str(e)}), 500
 
     return render_template('index.html')
+@app.errorhandler(500)
+def internal_server_error(error):
+    app_insights_client.track_exception()
+    return 'Internal Server Error', 500
 
 if __name__ == '__main__':
     app.run(debug=True)
