@@ -45,13 +45,13 @@ class ytdownloader:
                 if i in includedVideos_list or not includedVideos_list:
                     downloadvideo.append((i, urlInPlayList))
             
-            sys.stdout.write(downloadvideo)
+            sys.stdout.write(str(downloadvideo))
 
             os.system('cls')  # Clear the screen then download
 
             for index,urlInPlayList in downloadvideo:
                 self.downloadvideo(folder_path=param_folder_path, url=urlInPlayList,number=index)
-                sys.stdout.write(index,urlInPlayList)
+                # sys.stdout.write(str(index) + '-' + str(urlInPlayList))
                 
             # os.system('cls')  # Clear the screen after processing a playlist
         else:
@@ -93,5 +93,5 @@ if __name__ == '__main__':
     url_list = 'https://www.youtube.com/playlist?list=PLFLyCYS0pGW4C1oqM4PPfvlMrcGqjrGq4'
     folder_path = r'F:\Study Material\Class 6\Maths'  # Use a raw string or double backslashes
     excludedVideos ='1'
-    includedvideos = '11,12'
+    includedvideos = '16'
     ytobj.downloadytvideos(folder_path, url_list,excludedVideos,includedvideos)
