@@ -8,7 +8,9 @@ class ytdownloader:
         
         logger.info('downloadytvideos function is executed.')
         try:
+            sys.stdout.write("Check Folder") 
             if not os.path.exists(param_folder_path):
+                sys.stdout.write("Folder not exist")    
                 os.makedirs(param_folder_path)
         except Exception as e:
             sys.stdout.write("Exception param_folder_path -->" + e)
