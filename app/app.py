@@ -3,7 +3,7 @@ from flask import Flask, render_template, request, jsonify
 # from applicationinsights import TelemetryClient
 from .ytdownloader import ytdownloader
 from .logger import configure_logging
-
+from flask_cors import CORS
 
 # Configure logging
 configure_logging()
@@ -12,7 +12,7 @@ configure_logging()
 yt_downloader = ytdownloader()
 
 app = Flask(__name__)
-
+CORS(app)  # Enable CORS for all routes
 # app_insights_key = 'd204baed-6660-4a5a-ad9e-e4faa99df561'
 # app_insights_client = TelemetryClient(app_insights_key)
 
