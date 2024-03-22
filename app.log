@@ -1,0 +1,25 @@
+2024-03-22 21:15:52,647 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-03-22 21:15:52,647 - INFO - [33mPress CTRL+C to quit[0m
+2024-03-22 21:15:52,661 - INFO -  * Restarting with stat
+2024-03-22 21:15:53,408 - WARNING -  * Debugger is active!
+2024-03-22 21:15:53,418 - INFO -  * Debugger PIN: 196-458-743
+2024-03-22 21:16:01,790 - INFO - 127.0.0.1 - - [22/Mar/2024 21:16:01] "GET / HTTP/1.1" 200 -
+2024-03-22 21:16:02,063 - INFO - 127.0.0.1 - - [22/Mar/2024 21:16:02] "[36mGET /static/favicon.ico HTTP/1.1[0m" 304 -
+2024-03-22 21:16:08,155 - INFO - Index route accessed.
+2024-03-22 21:16:08,155 - INFO - downloadytvideos function is executed.
+2024-03-22 21:16:14,370 - INFO - 127.0.0.1 - - [22/Mar/2024 21:16:14] "POST / HTTP/1.1" 200 -
+2024-03-22 21:17:46,767 - INFO -  * Detected change in 'D:\\gitCode\\youtubeDownload\\app\\ytdownloader.py', reloading
+2024-03-22 21:17:46,875 - INFO -  * Restarting with stat
+2024-03-22 21:17:47,795 - WARNING -  * Debugger is active!
+2024-03-22 21:17:47,807 - INFO -  * Debugger PIN: 196-458-743
+2024-03-22 21:17:52,597 - INFO -  * Detected change in 'D:\\gitCode\\youtubeDownload\\app\\ytdownloader.py', reloading
+2024-03-22 21:17:52,697 - INFO -  * Restarting with stat
+2024-03-22 21:17:53,505 - WARNING -  * Debugger is active!
+2024-03-22 21:17:53,515 - INFO -  * Debugger PIN: 196-458-743
+2024-03-22 21:18:28,980 - INFO -  * Detected change in 'D:\\gitCode\\youtubeDownload\\app\\ytdownloader.py', reloading
+2024-03-22 21:18:29,087 - INFO -  * Restarting with stat
+2024-03-22 21:18:29,885 - WARNING -  * Debugger is active!
+2024-03-22 21:18:29,894 - INFO -  * Debugger PIN: 196-458-743
+2024-03-22 21:19:09,066 - INFO -  * Detected change in 'D:\\gitCode\\youtubeDownload\\app\\ytdownloader.py', reloading
+2024-03-22 21:19:09,151 - INFO -  * Restarting with stat

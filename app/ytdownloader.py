@@ -7,7 +7,12 @@ class ytdownloader:
     def downloadytvideos(self,param_folder_path, param_url_input,param_excludedVideos,param_includedVideos):
         
         logger.info('downloadytvideos function is executed.')
-        
+        try:
+            if not os.path.exists(param_folder_path):
+                os.makedirs(param_folder_path)
+        except Exception as e:
+            sys.stdout.write("Exception param_folder_path -->" + e)
+
         if param_includedVideos:
             if '-' in param_includedVideos:
                 startIn, endIn = map(int, param_includedVideos.split('-'))
@@ -66,7 +71,6 @@ class ytdownloader:
         
         title = str(number)+ str(" - ") +re.sub(r'\W+', ' ', yt.title)
         filename = os.path.join(folder_path, f"{title}.mp4")
-        sys.stdout.write(filename)
         self.videodownload(yt,filename,title)
         
 
@@ -82,7 +86,7 @@ class ytdownloader:
         try:
             sys.stdout.write(str(os.path.exists(filename)))
             if not os.path.exists(filename):
-                sys.stdout.write(filename)
+                sys.stdout.write("videodownload -> " +filename)
                 high_res_vid = yt.streams.get_highest_resolution()
                 yt.register_on_progress_callback(lambda chunk, file_handle, bytes_remaining: self.on_progress(chunk, file_handle, bytes_remaining, high_res_vid.filesize))
                 high_res_vid.download(filename=filename)
