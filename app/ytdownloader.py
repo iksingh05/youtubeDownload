@@ -9,6 +9,7 @@ class ytdownloader:
         logger.info('downloadytvideos function is executed.')
         try:
             os.chmod(param_folder_path,0o755)
+            sys.stdout.write("getcwd->"+ os.getcwd())
             sys.stdout.write("Check Folder") 
             if not os.path.exists(param_folder_path):
                 sys.stdout.write("Folder not exist")    
