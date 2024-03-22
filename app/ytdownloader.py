@@ -7,7 +7,7 @@ class ytdownloader:
     def downloadytvideos(self,param_folder_path, param_url_input,param_excludedVideos,param_includedVideos):
         
         logger.info('downloadytvideos function is executed.')
-
+        
         if param_includedVideos:
             if '-' in param_includedVideos:
                 startIn, endIn = map(int, param_includedVideos.split('-'))
@@ -25,7 +25,12 @@ class ytdownloader:
                 excludedVideos_list =  [int(x) for x in param_excludedVideos.split(',')]
         else:
             excludedVideos_list = []
-    
+
+        sys.stdout.write(param_folder_path)
+        sys.stdout.write(param_url_input)
+        sys.stdout.write(param_excludedVideos)
+        sys.stdout.write(param_includedVideos)
+
         # for url in url_list:
         if "playlist" in param_url_input:
             playlist = Playlist(param_url_input)
@@ -39,11 +44,14 @@ class ytdownloader:
                     continue
                 if i in includedVideos_list or not includedVideos_list:
                     downloadvideo.append((i, urlInPlayList))
+            
+            sys.stdout.write(downloadvideo)
 
             os.system('cls')  # Clear the screen then download
 
             for index,urlInPlayList in downloadvideo:
                 self.downloadvideo(folder_path=param_folder_path, url=urlInPlayList,number=index)
+                sys.stdout.write(index,urlInPlayList)
                 
             # os.system('cls')  # Clear the screen after processing a playlist
         else:
@@ -57,6 +65,7 @@ class ytdownloader:
         
         title = str(number)+ str(" - ") +re.sub(r'\W+', ' ', yt.title)
         filename = os.path.join(folder_path, f"{title}.mp4")
+        sys.stdout.write(filename)
         self.videodownload(yt,filename,title)
         
 
