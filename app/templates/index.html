@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Link to the favicon -->
+<link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+</head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Youtube Downloader</title>
+<style>
+    body {
+        min-height: 100%;
+        padding: 0;
+        margin: 0;
+        font-family: Roboto, Arial, sans-serif;
+        font-size: 14px;
+        color: #666;
+    }
+
+    .main-block {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background: #1c87c9;
+    }
+
+    form {
+        padding:1px;
+        margin: 1px;
+        box-shadow: 0 2px 5px #f5f5f5;
+        background: #63f95a;
+    }
+
+
+
+    input,textarea {
+        padding: 2px;
+        margin-bottom: 15px;
+        border: 1px solid #1c87c9;
+        width: calc(100% - 18px);
+        position:relative;
+        font-size: 1.0em;
+        background: linear-gradient(21deg, #10abff, #1beabd);
+        padding: 4px;
+        display: inline-block;
+    }
+
+    input::placeholder {
+        color: #0a8a1b;
+        font-style: italic;
+    }
+
+    /* CSS */
+    .button-10 {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 6px 14px;
+        font-family: -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+        border-radius: 6px;
+        border: none;
+
+        color: #fff;
+        background: linear-gradient(180deg, #4B91F7 0%, #367AF6 100%);
+        background-origin: border-box;
+        box-shadow: 0px 0.5px 1.5px rgba(54, 122, 246, 0.25), inset 0px 0.8px 0px -0.25px rgba(255, 255, 255, 0.2);
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+    }
+
+   </style>
+</head>
+
+<body>
+    <div class="main-block">
+        <form id="submissionForm" method="POST" onsubmit="return submitForm()">
+            <div class="info">
+                <table width="700px">
+                    <tr>
+                        <td colspan="2" width="100%">
+                            <h1 style="color: red; font-weight: bold;text-align:center;">Youtube Downloader</h1>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="15%" style="vertical-align: super;text-align:right;"><b style="color: red;">*&nbsp;</b><b>Path:</b></td>
+                        <td style="vertical-align: super;"><input class="fname" type="text" id="folderPath"
+                                name="folderPath" placeholder="Please enter local path to save youtube videos"></td>
+                    </tr>
+                    <tr>
+                        <td width="15%" style="vertical-align: super;text-align:right;"><b style="color: red;">*&nbsp;</b><b>URL:</b></td>
+                        <td style="vertical-align: bottom;"><input class="fname" type="text" id="url" name="url"
+                                placeholder="Please enter youtube video or playlist url">
+                            </td>
+                    </tr>
+                    <tr>
+                        <td width="18%" style="vertical-align: super;text-align:right;"><b>Excluded Videos:</b></td>
+                        <td style="vertical-align: super;"><input class="fname" type="text" id="excludedVideos" name="excludedVideos"
+                                placeholder="Please enter as list like 1,2,3,4 or 1-4">
+                            </td>
+                    </tr>
+                    <tr>
+                        <td width="17%" style="vertical-align: super;text-align:right;"><b>Included Videos:</b></td>
+                        <td style="vertical-align: super;"><input class="fname" type="text" id="includedVideos" name="includedVideos"
+                                placeholder="Please enter as list like 1,2,3,4 or 1-4">
+                            </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="center">
+
+                            <button class="button-10" role="button" id="submitButton">&nbsp;Download&nbsp;</button>
+                            <span id="urlError" class="error"></span>
+                            <!-- Error message section -->
+                            <div id="errorMessage" class="error-message"></div>
+                            <!-- End of error message section -->
+                        </td>
+
+                    </tr>
+                </table>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function submitForm() {
+            var folderPath = document.getElementById('folderPath').value.trim();
+            var url = document.getElementById('url').value.trim();
+
+            if (!folderPath) {
+                document.getElementById('folderError').innerText = 'Please enter folder path';
+                document.getElementById('folderPath').focus();
+                return false;
+            } else {
+                document.getElementById('folderError').innerText = '';
+            }
+
+            if (!url) {
+                document.getElementById('urlError').innerText = 'Please enter URL';
+                document.getElementById('url').focus();
+                return false;
+            } else {
+                document.getElementById('urlError').innerText = '';
+            }
+
+            // Make AJAX request to submit form data
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    var response = JSON.parse(xhr.responseText);
+                    if (xhr.status === 200) {
+                        // Reset error message
+                        resetErrorMessage();
+                        // Display success message (optional)
+                        alert(response.success);
+                    } else {
+                        // Display error message
+                        displayErrorMessage(response.error);
+                    }
+                    // Reset submit button
+                    document.getElementById('submitButton').disabled = false;
+                }
+            };
+            xhr.send('folderPath=' + encodeURIComponent(folderPath) + '&url=' + encodeURIComponent(url));
+
+            // Disable submit button to prevent multiple submissions
+            document.getElementById('submitButton').disabled = true;
+
+            return false; // Prevent default form submission
+        }
+
+        // Function to handle error message display
+        function displayErrorMessage(message) {
+            var errorMessageDiv = document.getElementById('errorMessage');
+            errorMessageDiv.innerText = message;
+        }
+
+        // Function to reset error message
+        function resetErrorMessage() {
+            var errorMessageDiv = document.getElementById('errorMessage');
+            errorMessageDiv.innerText = '';
+        }
+    </script>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,24 @@
+<!-- login.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<body>
+    <h2>Login</h2>
+    <form method="POST" action="{{ url_for('login') }}">
+        {{ form.csrf_token }}
+        <div>
+            {{ form.email.label }}<br>
+            {{ form.email }}
+        </div>
+        <div>
+            {{ form.password.label }}<br>
+            {{ form.password }}
+        </div>
+        <button type="submit">Login</button>
+    </form>
+</body>
+</html>
