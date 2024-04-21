@@ -5,14 +5,13 @@ logger = logging.getLogger(__name__)
 
 class ytdownloader:
     def downloadytvideos(self,param_folder_path, param_url_input,param_excludedVideos,param_includedVideos):
-        
         logger.info('downloadytvideos function is executed.')
         try:
             os.chmod(param_folder_path,0o755)
-            sys.stdout.write("getcwd->"+ os.getcwd())
-            sys.stdout.write("Check Folder") 
+            # sys.stdout.write("getcwd->"+ os.getcwd())
+            # sys.stdout.write("Check Folder") 
             if not os.path.exists(param_folder_path):
-                sys.stdout.write("Folder not exist")    
+                # sys.stdout.write("Folder not exist")    
                 os.makedirs(param_folder_path)
         except Exception as e:
             sys.stdout.write("Exception param_folder_path -->" + e)
@@ -34,39 +33,28 @@ class ytdownloader:
                 excludedVideos_list =  [int(x) for x in param_excludedVideos.split(',')]
         else:
             excludedVideos_list = []
-        sys.stdout.write("pwd")
-        os.system('pwd')
-        sys.stdout.write("param_folder_path" + param_folder_path)
-        sys.stdout.write("param_url_input" + param_url_input)
-        sys.stdout.write("param_excludedVideos" + param_excludedVideos)
-        sys.stdout.write("param_includedVideos" + param_includedVideos)
 
-        # for url in url_list:
         if "playlist" in param_url_input:
             playlist = Playlist(param_url_input)
-            i=0
-            downloadvideo = []
-            #create download video list
-                
-            for urlInPlayList in playlist.video_urls:
-                i +=1
-                if i in excludedVideos_list:
-                    continue
-                if i in includedVideos_list or not includedVideos_list:
-                    downloadvideo.append((i, urlInPlayList))
-            
-            sys.stdout.write("downloadvideo" + str(downloadvideo))
-
-            # os.system('cls')  # Clear the screen then download
-
-            for index,urlInPlayList in downloadvideo:
-                self.downloadvideo(folder_path=param_folder_path, url=urlInPlayList,number=index)
-                # sys.stdout.write(str(index) + '-' + str(urlInPlayList))
-                
-            # os.system('cls')  # Clear the screen after processing a playlist
+        elif "," in param_url_input:
+            playlist=param_url_input.split(',')
         else:
-            self.downloadvideo(param_folder_path, param_url_input)
-
+            playlist = [param_url_input]
+        
+        i=0
+        downloadvideo = []
+            
+        for urlInPlayList in playlist:
+            i +=1
+            if i in excludedVideos_list:
+                continue
+            if i in includedVideos_list or not includedVideos_list:
+                downloadvideo.append((i, urlInPlayList))
+        
+        for index,urlInPlayList in downloadvideo:
+            self.downloadvideo(folder_path=param_folder_path, url=urlInPlayList,number=index)
+            sys.stdout.write(str(index) + '-' + str(urlInPlayList))
+ 
     def downloadvideo(self,folder_path, url,number=1):
         yt = YouTube(url)
         
@@ -76,8 +64,7 @@ class ytdownloader:
         title = str(number)+ str(" - ") +re.sub(r'\W+', ' ', yt.title)
         filename = os.path.join(folder_path, f"{title}.mp4")
         self.videodownload(yt,filename,title)
-        
-
+ 
     def on_progress(self,chunk, file_handle, bytes_remaining, filesize):
         current = ((filesize - bytes_remaining) / filesize)
         percent = ('{0:.1f}').format(current * 100)
@@ -88,12 +75,14 @@ class ytdownloader:
 
     def videodownload(self,yt,filename,title):
         try:
-            sys.stdout.write(str(os.path.exists(filename)))
             if not os.path.exists(filename):
-                sys.stdout.write("videodownload -> " +filename)
+                sys.stdout.write(filename)
+                sys.stdout.write('\n')
                 high_res_vid = yt.streams.get_highest_resolution()
                 yt.register_on_progress_callback(lambda chunk, file_handle, bytes_remaining: self.on_progress(chunk, file_handle, bytes_remaining, high_res_vid.filesize))
                 high_res_vid.download(filename=filename)
+                sys.stdout.write('\n')
+                sys.stdout.write("downloaded successfully")  
             else:
                 sys.stdout.write("title-" + title + "- Already downloaded!")
         except Exception as e:
@@ -101,8 +90,8 @@ class ytdownloader:
 
 if __name__ == '__main__':
     ytobj=ytdownloader()
-    url_list = 'https://www.youtube.com/playlist?list=PLFLyCYS0pGW4C1oqM4PPfvlMrcGqjrGq4'
-    folder_path = r'F:\Study Material\Class 6\Maths'  # Use a raw string or double backslashes
-    excludedVideos ='1'
-    includedvideos = '16'
+    url_list = 'https://youtu.be/7Ro2hjMy-xQ'
+    folder_path = r'D:\IT Study Material\GoogleVertexAI\Vector Search and Embeddings'  # Use a raw string or double backslashes
+    excludedVideos =''
+    includedvideos = ''
     ytobj.downloadytvideos(folder_path, url_list,excludedVideos,includedvideos)
