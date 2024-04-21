@@ -8,38 +8,26 @@
 <title>Youtube Downloader</title>
 <style>
     body {
-        min-height: 100%;
-        padding: 0;
-        margin: 0;
+        
         font-family: Roboto, Arial, sans-serif;
         font-size: 14px;
-        color: #666;
-    }
-
-    .main-block {
+        color: hwb(0 0% 0%);
+        background-image:  url('../static/bgimage.jpeg');
+        background-size: auto;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-position: top center;
         display: flex;
-        flex-direction: column;
         justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-        background: #1c87c9;
+        align-items: flex-start;
     }
-
-    form {
-        padding:1px;
-        margin: 1px;
-        box-shadow: 0 2px 5px #f5f5f5;
-        background: #63f95a;
-    }
-
-
-
-    input,textarea {
+    input,
+    textarea {
         padding: 2px;
         margin-bottom: 15px;
         border: 1px solid #1c87c9;
         width: calc(100% - 18px);
-        position:relative;
+        position: relative;
         font-size: 1.0em;
         background: linear-gradient(21deg, #10abff, #1beabd);
         padding: 4px;
@@ -69,56 +57,60 @@
         -webkit-user-select: none;
         touch-action: manipulation;
     }
-
-   </style>
+</style>
 </head>
 
 <body>
-    <div class="main-block" >
-        <form id="submissionForm" method="POST" onsubmit="return submitForm()">
-                <table style="max-width:100%;height:auto;">
-                    <tr>
-                        <td colspan="2" width="600px">
-                            <h1 style="color: red; font-weight: bold;text-align:center;">Youtube Downloader</h1>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td width="15%" style="vertical-align: super;text-align:right;"><b style="color: red;">*&nbsp;</b><b>Path:</b></td>
-                        <td style="vertical-align: super;"><input class="fname" type="text" id="folderPath"
-                                name="folderPath" placeholder="Please enter local path to save youtube videos"></td>
-                    </tr>
-                    <tr>
-                        <td width="15%" style="vertical-align: super;text-align:right;"><b style="color: red;">*&nbsp;</b><b>URL:</b></td>
-                        <td style="vertical-align: bottom;"><input class="fname" type="text" id="url" name="url"
-                                placeholder="Please enter youtube videos with comma separated (,) or playlist url">
-                            </td>
-                    </tr>
-                    <tr>
-                        <td width="20%" style="vertical-align: super;text-align:right;"><b>Excluded Videos:</b></td>
-                        <td style="vertical-align: super;"><input class="fname" type="text" id="excludedVideos" name="excludedVideos"
-                                placeholder="Please enter as list like 1,2,3,4 or 1-4">
-                            </td>
-                    </tr>
-                    <tr>
-                        <td width="17%" style="vertical-align: super;text-align:right;"><b>Included Videos:</b></td>
-                        <td style="vertical-align: super;"><input class="fname" type="text" id="includedVideos" name="includedVideos"
-                                placeholder="Please enter as list like 1,2,3,4 or 1-4">
-                            </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" align="center">
 
-                            <button class="button-10" role="button" id="submitButton">&nbsp;Download&nbsp;</button>
-                            <span id="urlError" class="error"></span>
-                            <!-- Error message section -->
-                            <div id="errorMessage" class="error-message"></div>
-                            <!-- End of error message section -->
-                        </td>
+    <form id="submissionForm" method="POST" onsubmit="return submitForm()">
+        <div style="display: flex;background-color: #1beabd; justify-content: center; align-items: center;opacity: 85%;">
+        
+            <table style="width: 600px; border: 1px solid rgb(241, 14, 25);">
+            <tr>
+                <td colspan="2" width="600px">
+                    <h1 style="color: hwb(0 0% 0%); font-weight: bold;text-align:center;">Youtube Downloader</h1>
+                </td>
+            </tr>
+            <tr>
+                <td width="15%" style="vertical-align: super;text-align:right;"><b
+                        style="color: hwb(0 0% 0%);">*&nbsp;</b><b>Path:</b></td>
+                <td style="vertical-align: super;"><input class="fname" type="text" id="folderPath" name="folderPath"
+                        placeholder="Please enter local path to save youtube videos"></td>
+            </tr>
+            <tr>
+                <td width="15%" style="vertical-align: super;text-align:right;"><b
+                        style="color: hwb(0 0% 0%);">*&nbsp;</b><b>URL:</b></td>
+                <td style="vertical-align: bottom;"><input class="fname" type="text" id="url" name="url"
+                        placeholder="Please enter youtube videos with comma separated (,) or playlist url">
+                </td>
+            </tr>
+            <tr>
+                <td width="21%" style="vertical-align: super;text-align:right;"><b>Excluded Videos:</b></td>
+                <td style="vertical-align: super;"><input class="fname" type="text" id="excludedVideos"
+                        name="excludedVideos" placeholder="Please enter as list like 1,2,3,4 or 1-4">
+                </td>
+            </tr>
+            <tr>
+                <td width="17%" style="vertical-align: super;text-align:right;"><b>Included Videos:</b></td>
+                <td style="vertical-align: super;"><input class="fname" type="text" id="includedVideos"
+                        name="includedVideos" placeholder="Please enter as list like 1,2,3,4 or 1-4">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
 
-                    </tr>
-                </table>
-        </form>
+                    <button class="button-10" role="button" id="submitButton">&nbsp;Download&nbsp;</button>
+                    <span id="urlError" class="error"></span>
+                    <!-- Error message section -->
+                    <div id="errorMessage" class="error-message"></div>
+                    <!-- End of error message section -->
+                </td>
+
+            </tr>
+        </table>
     </div>
+    </form>
+
 
     <script>
         function submitForm() {
