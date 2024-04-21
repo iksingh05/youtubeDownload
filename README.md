@@ -1,6 +1,9 @@
 # Setup Environment 
 c:\Users\galaxy\AppData\Local\Programs\Python\Python312\python.exe -m venv venv
 
+# go to project dirctory
+cd /path/to/destination/your_project_directory
+
 # create Environment 
 python -m venv venv
 
