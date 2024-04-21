@@ -19,7 +19,9 @@
         background-position: top center;
         display: flex;
         justify-content: center;
-        align-items: flex-start;
+        margin: 0;
+        align-items: center;
+        height: 100vh;
     }
     input,
     textarea {
@@ -63,9 +65,8 @@
 <body>
 
     <form id="submissionForm" method="POST" onsubmit="return submitForm()">
-        <div style="display: flex;background-color: #1beabd; justify-content: center; align-items: center;opacity: 85%;">
         
-            <table style="width: 600px; border: 1px solid rgb(241, 14, 25);">
+            <table style="width: 600px;background-color: #1beabd; border: 1px solid rgb(241, 14, 25);opacity: 85%;border-radius: 15px; overflow: hidden;">
             <tr>
                 <td colspan="2" width="600px">
                     <h1 style="color: hwb(0 0% 0%); font-weight: bold;text-align:center;">Youtube Downloader</h1>
@@ -108,7 +109,7 @@
 
             </tr>
         </table>
-    </div>
+
     </form>
 
 
